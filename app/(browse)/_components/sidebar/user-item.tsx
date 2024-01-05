@@ -41,7 +41,7 @@ export const UserItem = ({ username, imageUrl, isLive }: UserItemProps) => {
                 )}>
                     <UserAvatar username={username} imageUrl={imageUrl} isLive={isLive} />
                     {!collapsed && <p className="truncate">{username}</p>}
-                    {!collapsed && <LiveBadge className="ml-auto" />}
+                    {!collapsed && isLive && <LiveBadge className="ml-auto" />}
                 </div>
             </Link>
 

@@ -3,7 +3,6 @@ import { redirect } from "next/navigation";
 import { Navbar } from "./_components/navbar";
 import { Sidebar } from "./_components/sidebar";
 import { Container } from "./_components/container";
-import { Toaster } from "sonner";
 
 interface CreatorLayoutProps {
     params: {
@@ -20,7 +19,6 @@ const CreatorLayout = async ({ params, children }: CreatorLayoutProps) => {
         <>
             <Navbar />
             <div className="flex h-full pt-20">
-                <Toaster theme="light" position="bottom-center" />
                 <Sidebar />
                 <Container>
                     {children}

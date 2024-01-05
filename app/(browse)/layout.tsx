@@ -1,5 +1,4 @@
 import { Suspense } from "react";
-import { Toaster } from "sonner";
 
 import { Navbar } from "./_components/navbar";
 import { Container } from "./_components/container";
@@ -13,7 +12,6 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
                 <Suspense fallback={<SidebarSkeleton />}>
                     <Sidebar />
                     <Container>
-                        <Toaster theme="light" position="bottom-center" />
                         {children}
                     </Container>
                 </Suspense>

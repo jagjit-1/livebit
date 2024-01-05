@@ -1,11 +1,12 @@
 import { db } from "./db";
 
-interface IdentityFields {
-    fieldName: "username" | "id" | "externalId"
-}
+type fieldName = "username" | "id" | "externalId";
 
-interface GetUserByFieldProps extends IdentityFields {
-    fieldValue: string
+
+interface GetUserByFieldProps {
+    fieldValue: string,
+    fieldName: fieldName,
+    fieldSelect?: []
 }
 
 export const getUserByField = async ({ fieldName, fieldValue }: GetUserByFieldProps) => {
@@ -15,6 +16,9 @@ export const getUserByField = async ({ fieldName, fieldValue }: GetUserByFieldPr
         user = await db.user.findUnique({
             where: {
                 username: fieldValue
+            },
+            include: {
+                stream: true
             }
         });
     }
@@ -22,6 +26,9 @@ export const getUserByField = async ({ fieldName, fieldValue }: GetUserByFieldPr
         user = await db.user.findUnique({
             where: {
                 id: fieldValue
+            },
+            include: {
+                stream: true
             }
         });
     }
@@ -29,6 +36,9 @@ export const getUserByField = async ({ fieldName, fieldValue }: GetUserByFieldPr
         user = await db.user.findUnique({
             where: {
                 externalUserId: fieldValue
+            },
+            include: {
+                stream: true
             }
         });
     }
