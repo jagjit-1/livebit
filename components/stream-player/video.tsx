@@ -10,6 +10,7 @@ import {
 import { OfflineVideo } from "./offline-video";
 import { LoadingVideo } from "./loading-video";
 import { LiveVideo } from "./live-video";
+import { Skeleton } from "../ui/skeleton";
 
 interface VideoProps {
     hostname: string;
@@ -34,5 +35,18 @@ export const Video = ({ hostname, hostIdentity }: VideoProps) => {
     else if (participant) {
         content = <LiveVideo participant={participant} />
     }
-    return content;
+    // TODO : aspect ratio messes with the width settings, look into improvements for this  
+    return (
+        <div className=" max-h-[calc(100vh-5rem)] aspect-video border border-background">
+            {content}
+        </div>
+    );
+}
+
+export const VideoSkeleton = () => {
+    return (
+        <div className="aspect-video border-x border-background">
+            <Skeleton className="h-full w-full rounded-none" />
+        </div>
+    )
 }

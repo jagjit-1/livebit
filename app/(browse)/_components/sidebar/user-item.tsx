@@ -7,7 +7,7 @@ import { useSidebar } from "@/store/use-sidebar";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
-import { UserAvatar } from "../user-avatar";
+import { UserAvatar } from "../../../../components/user-avatar";
 import { LiveBadge } from "../live-badge";
 
 interface UserItemProps {
@@ -49,7 +49,7 @@ export const UserItem = ({ username, imageUrl, isLive }: UserItemProps) => {
     )
 };
 
-export const UserItemSkeleton = () =>{
+export const UserItemSkeleton = () => {
     return (
         <li className="flex items-center w-full gap-x-4 px-3 py-2">
             <Skeleton className="min-h-[32px] min-w-[32px] rounded-full" />
