@@ -1,7 +1,9 @@
+import Link from "next/link"
+
 export const Logo = () => {
     return (
         <div>
-            Creater Dashboard
+            <Link href="/">Creater Dashboard</Link>
         </div>
     )
 }

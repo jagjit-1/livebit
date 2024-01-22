@@ -8,12 +8,32 @@ import { useChatSidebar } from "@/store/use-chat-sidebar";
 import { cn } from "@/lib/utils";
 import { Chat, ChatSkeleton } from "./chat";
 import { ChatToggle } from "./chat-toggle";
-import { Header } from "./header";
+import { Header, HeaderSkeleton } from "./header";
+import { InfoCard } from "./info-card";
+import { AboutCard } from "./about-card";
 
+type CustomStream = {
+    isLive: boolean;
+    id: string;
+    name: string;
+    thumbnailUrl: string | null;
+    isChatEnabled: boolean;
+    isChatDelayed: boolean;
+    isChatFollowersOnly: boolean;
+}
+
+type CustomUser = {
+    id: string;
+    username: string;
+    bio: string | null;
+    imageUrl: string;
+    stream: CustomStream | null;
+    _count: { followedBy: number }
+}
 
 interface StreamPlayerProps {
-    host: User & { stream: Stream | null };
-    stream: Stream;
+    host: CustomUser;
+    stream: CustomStream;
     isFollowing: boolean
 }
 
@@ -61,6 +81,20 @@ export const StreamPlayer = ({ host, stream, isFollowing }: StreamPlayerProps) =
                         isFollowing={isFollowing}
                         name={stream.name}
                     />
+                    <InfoCard
+                        hostIdentity={host.id}
+                        viewerIdentity={identity}
+                        name={stream.name}
+                        thumbnailUrl={stream.thumbnailUrl}
+
+                    />
+                    <AboutCard
+                        hostName={host.username}
+                        hostIdentity={host.id}
+                        viewerIdentity={identity}
+                        bio={host.bio}
+                        followerByCount={host._count.followedBy}
+                    />
                 </div>
                 <div className={cn(
                     "col-span-1 lg:col-span-2 h-full",
@@ -86,6 +120,7 @@ export const StreamPlayerSkeleton = () => {
         <div className="grid grid-cols-1 lg:gap-y-0 lg:grid-cols-8 h-full">
             <div className="space-y-4 col-span-1 lg:col-span-6 lg:overflow-y-auto hidden-scrollbar pb-10">
                 <VideoSkeleton />
+                <HeaderSkeleton />
             </div>
             <div className="col-span-1 lg:col-span-2 h-full">
                 <ChatSkeleton />

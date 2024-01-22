@@ -8,13 +8,13 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
     return (
         <div>
             <Navbar />
-            <div className="pt-20">
+            <div className="flex h-full pt-20">
                 <Suspense fallback={<SidebarSkeleton />}>
                     <Sidebar />
-                    <Container>
-                        {children}
-                    </Container>
                 </Suspense>
+                <Container>
+                    {children}
+                </Container>
             </div>
         </div>
     );

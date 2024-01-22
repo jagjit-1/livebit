@@ -17,9 +17,29 @@ export const getUserByField = async ({ fieldName, fieldValue }: GetUserByFieldPr
             where: {
                 username: fieldValue
             },
-            include: {
-                stream: true
-            }
+            select: {
+                id: true,
+                username: true,
+                bio: true,
+                externalUserId: true,
+                imageUrl: true,
+                stream: {
+                    select: {
+                        id: true,
+                        isChatDelayed: true,
+                        isChatEnabled: true,
+                        isChatFollowersOnly: true,
+                        isLive: true,
+                        thumbnailUrl: true,
+                        name: true
+                    }
+                },
+                _count: {
+                    select: {
+                        followedBy: true
+                    }
+                }
+            },
         });
     }
     else if (fieldName === "id") {
@@ -27,9 +47,29 @@ export const getUserByField = async ({ fieldName, fieldValue }: GetUserByFieldPr
             where: {
                 id: fieldValue
             },
-            include: {
-                stream: true
-            }
+            select: {
+                id: true,
+                username: true,
+                bio: true,
+                externalUserId: true,
+                imageUrl: true,
+                stream: {
+                    select: {
+                        id: true,
+                        isChatDelayed: true,
+                        isChatEnabled: true,
+                        isChatFollowersOnly: true,
+                        isLive: true,
+                        thumbnailUrl: true,
+                        name: true
+                    }
+                },
+                _count: {
+                    select: {
+                        followedBy: true
+                    }
+                }
+            },
         });
     }
     else if (fieldName === "externalId") {
@@ -37,9 +77,29 @@ export const getUserByField = async ({ fieldName, fieldValue }: GetUserByFieldPr
             where: {
                 externalUserId: fieldValue
             },
-            include: {
-                stream: true
-            }
+            select: {
+                id: true,
+                username: true,
+                bio: true,
+                externalUserId: true,
+                imageUrl: true,
+                stream: {
+                    select: {
+                        id: true,
+                        isChatDelayed: true,
+                        isChatEnabled: true,
+                        isChatFollowersOnly: true,
+                        isLive: true,
+                        thumbnailUrl: true,
+                        name: true
+                    }
+                },
+                _count: {
+                    select: {
+                        followedBy: true
+                    }
+                }
+            },
         });
     }
     else {
