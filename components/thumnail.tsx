@@ -1,7 +1,13 @@
+"use client"
+
 import Image from "next/image";
 import { UserAvatar } from "./user-avatar";
 import { Skeleton } from "./ui/skeleton";
 import { LiveBadge } from "@/app/(browse)/_components/live-badge";
+import { useState, useTransition } from "react";
+import { regenerateSignedUrl } from "@/actions/s3";
+import { S3Image } from "./S3Image";
+import { useAuth } from "@clerk/nextjs";
 
 interface ThumbnailProps {
     src: string | null;
@@ -11,10 +17,10 @@ interface ThumbnailProps {
 }
 
 export const Thumbnail = ({ src, fallback, isLive, username }: ThumbnailProps) => {
-
+    const [imageError, setImageError] = useState(false);
     let content;
 
-    if (!src) {
+    if (!src || imageError) {
         content = (
             <div className="bg-background flex flex-col items-center justify-center gap-y-4 h-full w-full transition-transform group-hover:translate-x-2 group-hover: -translate-y-2">
                 <UserAvatar
@@ -29,7 +35,7 @@ export const Thumbnail = ({ src, fallback, isLive, username }: ThumbnailProps) =
     }
     else {
         content = (
-            <Image src={src} fill alt="Thumbnail" className="object-cover transition-transform group-hover:translate-x-2 group-hover:-translate-y-2" />
+            <S3Image src={src} className="object-cover transition-transform group-hover:translate-x-2 group-hover:-translate-y-2" username={username} onError={() => setImageError(true)} />
         )
     }
 

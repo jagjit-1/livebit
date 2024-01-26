@@ -6,13 +6,14 @@ import Image from "next/image";
 import { InfoModal } from "./info-modal";
 
 interface InfoCardProps {
+    hostName: string
     hostIdentity: string;
     viewerIdentity: string;
     name: string;
     thumbnailUrl: string | null;
 }
 
-export const InfoCard = ({ hostIdentity, viewerIdentity, name, thumbnailUrl }: InfoCardProps) => {
+export const InfoCard = ({ hostIdentity, viewerIdentity, name, thumbnailUrl, hostName }: InfoCardProps) => {
     const hostAsViewer = `host-${hostIdentity}`;
     const isHost = viewerIdentity === hostAsViewer;
 
@@ -35,6 +36,7 @@ export const InfoCard = ({ hostIdentity, viewerIdentity, name, thumbnailUrl }: I
                     <InfoModal
                         initialName={name}
                         initialThumbnailUrl={thumbnailUrl}
+                        hostName={hostName}
                     />
                 </div>
                 <Separator />

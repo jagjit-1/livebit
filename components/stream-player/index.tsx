@@ -86,7 +86,7 @@ export const StreamPlayer = ({ host, stream, isFollowing }: StreamPlayerProps) =
                         viewerIdentity={identity}
                         name={stream.name}
                         thumbnailUrl={stream.thumbnailUrl}
-
+                        hostName={host.username}
                     />
                     <AboutCard
                         hostName={host.username}

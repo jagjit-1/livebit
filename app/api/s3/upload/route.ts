@@ -1,3 +1,4 @@
+import { regenerateSignedUrl } from "@/actions/s3";
 import { getSelf } from "@/lib/auth-service";
 import { db } from "@/lib/db";
 import {
@@ -7,6 +8,7 @@ import {
 } from "@aws-sdk/client-s3";
 
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { revalidatePath } from "next/cache";
 
 const s3 = new S3Client({
     region: process.env.AWS_DEFAULT_REGION as string,
@@ -23,19 +25,9 @@ export async function POST(req: Request) {
     const file = formData.get("file") as File;
     const Body = (await file.arrayBuffer()) as Buffer;
 
-    const putcommand = new PutObjectCommand({ Bucket: process.env.BUCKET_NAME, Key: file.name, Body, ContentType: file.type });
+    const putcommand = new PutObjectCommand({ Bucket: process.env.BUCKET_NAME, Key: `thumbnail-stream-${self.username}`, Body, ContentType: file.type });
     s3.send(putcommand);
-    const getCommand = new GetObjectCommand({ Bucket: process.env.BUCKET_NAME, Key: file.name });
-    const url = await getSignedUrl(s3, getCommand);
+    await regenerateSignedUrl(self.username);
 
-    await db.stream.update({
-        where: {
-            userId: self.id
-        },
-        data: {
-            thumbnailUrl: url
-        }
-    })
-
-    return Response.json({ fileUrl: url });
+    return Response.json({}, { status: 200 });
 }
